@@ -1,0 +1,16 @@
+package main;
+
+import ui.JFrameGame;
+
+/**
+ * ³ÌÐòÈë¿Ú
+ * @author Ben
+ *
+ */
+public class Main
+{
+	public static void main(String[] args)
+	{
+		new JFrameGame().setVisible(true);
+	}
+}
