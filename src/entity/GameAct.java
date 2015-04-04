@@ -44,7 +44,7 @@ public class GameAct
 	public GameAct()
 	{
 		
-		init();
+		init(new Random().nextInt(7));
 //		// TODO 配置
 //		actPoints = new Point[]
 //		{
@@ -162,11 +162,11 @@ public class GameAct
 	/**
 	 * 每次刷新一个随机的下落方块
 	 */
-	public void init()
+	public void init(int next)
 	{
 		// 随机0-6
-		int actType = new Random().nextInt(7);
-		this.actType = actType;
+		// int actType = new Random().nextInt(7);
+		this.actType = next;
 		Point[] points = POINT_CONFIG.get(actType);
 		actPoints = new Point[points.length];
 		for (int i = 0; i < actPoints.length; i++)

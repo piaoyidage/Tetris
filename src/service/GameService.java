@@ -14,10 +14,14 @@ import entity.GameAct;
 public class GameService
 {
 	private GameDto dto;
+	
+	private Random random;
+	private static int RANDOM_NUM = 7;
 
 	public GameService(GameDto dto)
 	{
 		this.dto = dto;
+		this.random = new Random();
 		GameAct gameAct = new GameAct();
 		dto.setGameAct(gameAct);
 	}
@@ -51,7 +55,9 @@ public class GameService
 		// TODO 判断是否升级	升级操作
 		
 		// 刷新一个新的方块
-		this.dto.getGameAct().init();
+		int next = random.nextInt(RANDOM_NUM);
+		this.dto.setNext(next);
+		this.dto.getGameAct().init(next);
 	}
 
 	/**
