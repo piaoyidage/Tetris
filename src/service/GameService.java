@@ -55,9 +55,9 @@ public class GameService
 		// TODO 判断是否升级	升级操作
 		
 		// 刷新一个新的方块
+		this.dto.getGameAct().init(this.dto.getNext());
 		int next = random.nextInt(RANDOM_NUM);
 		this.dto.setNext(next);
-		this.dto.getGameAct().init(next);
 	}
 
 	/**
@@ -74,6 +74,21 @@ public class GameService
 	public void moveRight()
 	{
 		this.dto.getGameAct().move(1, 0, this.dto.getGameMap());
+	}
+
+	// TODO:测试专用
+	public void test()
+	{
+		int point = this.dto.getCurPoint();
+		int level = this.dto.getCurLevel();
+		int rmLines = this.dto.getCurRemoveRowLines();
+		point += 10;
+		level += 1;
+		rmLines += 1;
+		this.dto.setCurLevel(level);
+		this.dto.setCurPoint(point);
+		this.dto.setCurRemoveRowLines(rmLines);
+		
 	}
 
 	

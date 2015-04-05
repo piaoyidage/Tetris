@@ -24,7 +24,9 @@ public class LayerAbout extends Layer
 	public void paint(Graphics g)
 	{
 		this.createWindow(g);
-		g.drawImage(IMG_ABOUT, this.x + PADDING, this.y + PADDING, null);
+		
+		this.drawImageAtCenter(IMG_ABOUT, g);
+		//g.drawImage(IMG_ABOUT, this.x + (PADDING << 1), this.y + PADDING, null);
 	}
 
 }

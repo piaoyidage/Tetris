@@ -45,6 +45,7 @@ public class GameAct
 	{
 		
 		init(new Random().nextInt(7));
+		
 //		// TODO 配置
 //		actPoints = new Point[]
 //		{
@@ -160,7 +161,7 @@ public class GameAct
 	}
 
 	/**
-	 * 每次刷新一个随机的下落方块
+	 * 每次刷新一个随机的下落方块组
 	 */
 	public void init(int next)
 	{

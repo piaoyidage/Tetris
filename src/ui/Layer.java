@@ -16,6 +16,15 @@ import dto.GameDto;
  */
 public abstract class Layer
 {
+	
+	/**
+	 * 数字图片
+	 */
+	protected static final Image IMG_NUM = new ImageIcon("graphics/string/number.png").getImage();
+	protected static final int NUM_WIDTH = IMG_NUM.getWidth(null) / 10;
+	protected static final int NUM_HEIGHT = IMG_NUM.getHeight(null);
+	
+	
 	// 图片、图片宽度、图片高度
 	private static final Image IMG = new ImageIcon("graphics/window/window.png").getImage();
 	private static final int IMG_WIDTH = IMG.getWidth(null);
@@ -92,4 +101,46 @@ public abstract class Layer
 	
 	// 让子类重写
 	public abstract void paint(Graphics g);
+	
+	/**
+	 * 绘制数字，并且右对齐
+	 * @param x 
+	 * @param y
+	 * @param num 数字
+	 * @param maxBit 最大位数
+	 * @param g 画笔
+	 */
+	protected void drawNumberAlignRight(int x, int y, int num, int maxBit, Graphics g)
+	{
+		// 数字转成字符串
+		String numStr = Integer.toString(num);
+		// 打印数字右对齐
+		for (int i = 0; i < maxBit; i++)
+		{
+			if (maxBit - i <= numStr.length())
+			{
+				int index = i + numStr.length() - maxBit;
+				int bit = numStr.charAt(index) - '0';
+				g.drawImage(IMG_NUM, this.x + x + i * NUM_WIDTH, 
+						 	this.y + y, this.x + x + NUM_WIDTH + i * NUM_WIDTH, 
+						 	this.y + y + NUM_HEIGHT, 
+						 	bit * NUM_WIDTH, 
+						 	0, 
+						 	(bit+1) * NUM_WIDTH, NUM_HEIGHT, null);
+			}
+		}
+
+	}
+	
+	/**
+	 * 图片居中显示
+	 * @param img
+	 * @param g
+	 */
+	protected void drawImageAtCenter(Image img, Graphics g)
+	{
+		int imgW = img.getWidth(null);
+		int imgH = img.getHeight(null);
+		g.drawImage(img, this.x + (this.width-imgW>>1), this.y + (this.height-imgH>>1), null);
+	}
 }

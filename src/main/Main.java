@@ -3,6 +3,7 @@ package main;
 import service.GameService;
 import ui.JFrameGame;
 import ui.JPanelGame;
+import config.GameConfig;
 import control.GameControl;
 import control.PlayerControl;
 import dto.GameDto;
@@ -29,6 +30,6 @@ public class Main
 		// 安装玩家控制器
 		panel.setGameControl(playControl);
 		// 创建游戏界面，安装游戏面板
-		new JFrameGame(panel);
+		new JFrameGame(panel).setTitle("俄罗斯方块");;
 	}
 }

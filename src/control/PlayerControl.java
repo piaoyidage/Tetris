@@ -43,6 +43,10 @@ public class PlayerControl extends KeyAdapter
 		case KeyEvent.VK_RIGHT:
 			this.gameControl.moveRight();
 			break;
+		// TODO:≤‚ ‘◊®”√
+		case KeyEvent.VK_A:
+			this.gameControl.test();
+			break;
 		default:
 			break;
 		}

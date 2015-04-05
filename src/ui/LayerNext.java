@@ -36,15 +36,5 @@ public class LayerNext extends Layer
 		this.drawImageAtCenter(NEXT_ACT[this.dto.getNext()], g);
 	}
 
-	/**
-	 * Í¼Æ¬¾ÓÖÐÏÔÊ¾
-	 * @param img
-	 * @param g
-	 */
-	public void drawImageAtCenter(Image img, Graphics g)
-	{
-		int imgW = img.getWidth(null);
-		int imgH = img.getHeight(null);
-		g.drawImage(img, this.x + (this.width-imgW>>1), this.y + (this.height-imgH>>1), null);
-	}
+	
 }

@@ -57,4 +57,11 @@ public class GameControl
 		this.panelGame.repaint();
 	}
 
+	// TODO£º²âÊÔ×¨ÓÃ
+	public void test()
+	{
+		this.gameService.test();
+		this.panelGame.repaint();
+	}
+
 }

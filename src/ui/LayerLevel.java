@@ -16,13 +16,8 @@ public class LayerLevel extends Layer
 	 * 等级图片
 	 */
 	private static final Image IMG_LEVEL = new ImageIcon("graphics/string/level.png").getImage();
+	private static final int IMG_LEVEL_WIDTH = IMG_LEVEL.getWidth(null);
 	
-	/**
-	 * 数字图片
-	 */
-	private static final Image IMG_LEVEL_NUM = new ImageIcon("graphics/string/number.png").getImage();
-	private static final int NUM_WIDTH = 60;
-	private static final int NUM_HEIGHT = 80;
 
 	public LayerLevel(int x, int y, int width, int height)
 	{
@@ -33,24 +28,12 @@ public class LayerLevel extends Layer
 	public void paint(Graphics g)
 	{
 		this.createWindow(g);
-		g.drawImage(IMG_LEVEL, this.x + PADDING, this.y + PADDING, null);
-		
-		drawLevelNumber(IMG_LEVEL_NUM, 64, 32, 2, g);
+		// 窗口中心绘制“等级”
+		int centerX = this.width - IMG_LEVEL_WIDTH >> 1;
+		g.drawImage(IMG_LEVEL, this.x + centerX, this.y + PADDING, null);
+		// 绘制等级数字
+		drawNumberAlignRight(centerX, 64, this.dto.getCurLevel(), 2, g);
 	}
 
-	/**
-	 * 绘制数字
-	 * @param img
-	 * @param x
-	 * @param y
-	 * @param g
-	 */
-	public void drawLevelNumber(Image img, int x, int y, int num, Graphics g)
-	{
-		g.drawImage(img, this.x + x, 
-						 this.y + y, this.x + x + NUM_WIDTH, 
-						 this.y + y + NUM_HEIGHT, num * NUM_WIDTH, 
-						 0, 
-						 (num+1) * NUM_WIDTH, NUM_HEIGHT, null);
-	}
+	
 }
