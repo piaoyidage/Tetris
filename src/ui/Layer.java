@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -59,6 +60,14 @@ public abstract class Layer
 		SIZE = gameConfig.getWindowSize();
 		PADDING = gameConfig.getPadding();
 	}
+	
+	/**
+	 * 进度条值槽
+	 */
+	protected static final Image IMG_PROGRESS_BAR = new ImageIcon("graphics/string/progressBar.png").getImage();
+	protected static final int EXP_WIDTH = IMG_PROGRESS_BAR.getWidth(null);
+	protected static final int EXP_HEIGHT = IMG_PROGRESS_BAR.getHeight(null);
+	protected static final int EXP_X_START = PADDING;
 	
 	protected Layer(int x, int y, int width, int height)
 	{
@@ -142,5 +151,32 @@ public abstract class Layer
 		int imgW = img.getWidth(null);
 		int imgH = img.getHeight(null);
 		g.drawImage(img, this.x + (this.width-imgW>>1), this.y + (this.height-imgH>>1), null);
+	}
+	
+	/**
+	 * 绘制值槽
+	 * @param expYStart 开始y坐标
+	 * @param curValue 
+	 * @param maxValue
+	 * @param g
+	 */
+	protected void drawProgressBar(int expYStart, int curValue, int maxValue, Graphics g)
+	{
+		// 绘制黑色矩形框
+		g.setColor(Color.BLACK);
+		g.fillRect(this.x + EXP_X_START, expYStart, EXP_WIDTH + 4, EXP_HEIGHT + 4);
+		// 绘制白色矩形框
+		g.setColor(Color.WHITE);
+		g.fillRect(this.x + EXP_X_START + 1, expYStart + 1, EXP_WIDTH + 2, EXP_HEIGHT + 2);
+		// 绘制黑色矩形框
+		g.setColor(Color.BLACK);
+		g.fillRect(this.x + EXP_X_START + 2, expYStart + 2, EXP_WIDTH, EXP_HEIGHT);
+		// 绘制进度条
+		g.drawImage(IMG_PROGRESS_BAR, 
+					this.x + EXP_X_START + 2,
+					expYStart + 2, 
+					(int)(this.x + EXP_X_START + 2 + (double)curValue / maxValue * EXP_WIDTH), 
+					expYStart + 2 + EXP_HEIGHT, 0, 0, 
+					(int)((double)curValue / maxValue * EXP_WIDTH), EXP_HEIGHT, null);
 	}
 }

@@ -4,3 +4,4 @@
 	(1).LayerNext编写下一个下落方块组
 	(2).LayerLevel显示等级
 	(3).LayerPoint显示分数，消行，值槽的显示
+	(4).LayerDatabase显示记录

@@ -102,11 +102,11 @@ public class LayerPoint extends Layer
 
 	/**
 	 * 绘制进度条值槽
-	 * @param x
-	 * @param y
-	 * @param width
-	 * @param height
-	 * @param g
+	 * @param x x坐标
+	 * @param y y坐标
+	 * @param width 宽度
+	 * @param height 高度
+	 * @param g 画笔
 	 */
 	private void drawProgressBar(int x, int y, int width, int height, Graphics g)
 	{
@@ -123,7 +123,8 @@ public class LayerPoint extends Layer
 		g.drawImage(IMG_PROGRESS_BAR, x, y, x + width, y + height, 0, 0, width, height, null);
 //		g.setFont(DEFAULT_FONT);
 //		g.setColor(Color.WHITE);
-//		g.drawString("下一级", x , y + 20);
+//		g.drawString("下一级", x , y + 20); 
+		// 绘制“下一级”
 		g.drawImage(IMG_NEXT, x + 2, y + 2, null);
 	}
 }

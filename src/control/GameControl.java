@@ -2,6 +2,8 @@ package control;
 
 import service.GameService;
 import ui.JPanelGame;
+import dao.Data;
+import dao.DataTest;
 
 
 /**
@@ -13,6 +15,9 @@ import ui.JPanelGame;
  */
 public class GameControl
 {
+	// TODO 测试
+	private Data dataA;
+	private Data dataB;
 	
 	/**
 	 * 游戏界面层
@@ -27,6 +32,12 @@ public class GameControl
 	{
 		this.panelGame = jpanelGame;
 		this.gameService = gameService;
+		
+		// TODO: 测试
+		// 从数据接口A获得数据库记录
+		this.dataA = new DataTest();
+		// 设置数据库记录到游戏
+		this.gameService.setDatabaseRecord(dataA.loadData());
 	}
 
 	/**

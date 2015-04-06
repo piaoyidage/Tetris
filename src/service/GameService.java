@@ -1,9 +1,11 @@
 package service;
 
 import java.awt.Point;
+import java.util.List;
 import java.util.Random;
 
 import dto.GameDto;
+import dto.Player;
 import entity.GameAct;
 
 /**
@@ -91,5 +93,9 @@ public class GameService
 		
 	}
 
-	
+	// TODO：测试 设置数据库记录
+	public void setDatabaseRecord(List<Player> players)
+	{
+		this.dto.setDatabaseRecord(players);
+	}
 }
