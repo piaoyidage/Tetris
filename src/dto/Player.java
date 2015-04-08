@@ -1,10 +1,12 @@
 package dto;
 
+import java.io.Serializable;
+
 /**
  * @author Ben
  * 游戏玩家信息，用户名和得分
  */
-public class Player
+public class Player implements Comparable, Serializable
 {
 	private String username;
 	
@@ -35,5 +37,12 @@ public class Player
 	public void setPoint(int point)
 	{
 		this.point = point;
+	}
+
+	@Override
+	public int compareTo(Object o)
+	{
+		Player p = (Player)o;
+		return p.getPoint() - this.point;
 	}
 }

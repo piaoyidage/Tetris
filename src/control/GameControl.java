@@ -3,7 +3,8 @@ package control;
 import service.GameService;
 import ui.JPanelGame;
 import dao.Data;
-import dao.DataTest;
+import dao.DataBase;
+import dao.DataDisk;
 
 
 /**
@@ -35,9 +36,13 @@ public class GameControl
 		
 		// TODO: 测试
 		// 从数据接口A获得数据库记录
-		this.dataA = new DataTest();
+		this.dataA = new DataBase();
 		// 设置数据库记录到游戏
 		this.gameService.setDatabaseRecord(dataA.loadData());
+		// 从数据接口B获取本地记录
+		this.dataB = new DataDisk();
+		// 设置本地记录到游戏
+		this.gameService.setLocalRecord(dataB.loadData());
 	}
 
 	/**

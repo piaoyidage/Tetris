@@ -31,7 +31,7 @@ public class LayerDisk extends LayerData
 		this.createWindow(g);
 		g.drawImage(IMG_DISK, this.x + PADDING, this.y + PADDING, null);
 		// 显示本地记录
-		List<Player> players = this.dto.getDatabaseRecord();
+		List<Player> players = this.dto.getLocalRecord();
 		this.showData(players, g);
 	}
 

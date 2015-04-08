@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.List;
@@ -63,15 +64,21 @@ public abstract class LayerData extends Layer
 			int recordPoint = players.get(i).getPoint();
 			this.drawProgressBar(expYStart, curPoint, recordPoint, g);
 
-			// 绘制“No Data”
-			g.drawImage(IMG_NODATA, this.x + (PADDING << 1), expYStart + 4,
-					null);
-
-			// 绘制分数
-			g.setColor(Color.white);
-			// g.setFont(new Font("黑体", Font.BOLD, 32));
-			g.drawString(recordPoint + "", this.x + EXP_WIDTH - (PADDING << 2),
-					expYStart + 22);
+			// 绘制“No Data” 当记录不够5个
+			if (players.get(i).getUsername().equals("no data"))
+			{
+				g.drawImage(IMG_NODATA, this.x + (PADDING << 1), expYStart + 4, null);
+			}
+			else
+			{
+				g.setColor(Color.red);
+				g.setFont(new Font("华文楷体", Font.BOLD, 22));
+				// 绘制姓名
+				g.drawString(players.get(i).getUsername(), this.x + (PADDING << 1), expYStart + 22);
+				// 绘制分数
+				g.drawString(recordPoint + "", this.x + EXP_WIDTH - (PADDING << 2),
+						expYStart + 22);
+			}
 		}
 	}
 

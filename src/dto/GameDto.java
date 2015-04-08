@@ -1,5 +1,7 @@
 package dto;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import entity.GameAct;
@@ -69,9 +71,28 @@ public class GameDto
 
 	public void setDatabaseRecord(List<Player> databaseRecord)
 	{
-		this.databaseRecord = databaseRecord;
+		this.databaseRecord = setFullRecord(databaseRecord);
 	}
 
+	/**
+	 * 设置记录数至少为5 并且排序
+	 * @param players
+	 * @return
+	 */
+	public List<Player> setFullRecord(List<Player> players)
+	{
+		if (players == null)
+		{
+			players = new ArrayList<Player>();
+		}
+		while (players.size() < 5)
+		{
+			players.add(new Player("no data", 0));
+		}
+		Collections.sort(players);
+		return players;
+	}
+	
 	public List<Player> getLocalRecord()
 	{
 		return localRecord;
@@ -79,7 +100,7 @@ public class GameDto
 
 	public void setLocalRecord(List<Player> localRecord)
 	{
-		this.localRecord = localRecord;
+		this.localRecord = setFullRecord(localRecord);
 	}
 
 	public boolean[][] getGameMap()
@@ -141,5 +162,6 @@ public class GameDto
 	{
 		this.curRemoveRowLines = curRemoveRowLines;
 	}
+
 	
 }

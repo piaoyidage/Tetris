@@ -98,4 +98,10 @@ public class GameService
 	{
 		this.dto.setDatabaseRecord(players);
 	}
+	
+	// TODO
+	public void setLocalRecord(List<Player> players)
+	{
+		this.dto.setLocalRecord(players);
+	}
 }
