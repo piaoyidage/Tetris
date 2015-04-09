@@ -5,6 +5,7 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
+import util.FrameUtil;
 import config.FrameConfig;
 import config.GameConfig;
 
@@ -27,12 +28,13 @@ public class JFrameGame extends JFrame
 		this.setSize(frameConfig.getWidth(), frameConfig.getHeight());
 		// 4.设置不允许窗口大小调整
 		this.setResizable(false);
-		// 5.使用Toolkit来调整窗口位置
-		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		Dimension d = toolkit.getScreenSize();
-		int x = d.width - this.getWidth() >> 1;
-		int y = (d.height - this.getHeight() >> 1) - frameConfig.getWindowUp();
-		this.setLocation(x, y);
+//		// 5.使用Toolkit来调整窗口位置
+//		Toolkit toolkit = Toolkit.getDefaultToolkit();
+//		Dimension d = toolkit.getScreenSize();
+//		int x = d.width - this.getWidth() >> 1;
+//		int y = (d.height - this.getHeight() >> 1) - frameConfig.getWindowUp();
+//		this.setLocation(x, y);
+		FrameUtil.setFrameCenter(this);
 		// 6.设置panel
 		this.setContentPane(panel);
 		// 7.设置可见
