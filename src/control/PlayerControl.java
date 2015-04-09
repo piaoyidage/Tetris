@@ -25,30 +25,31 @@ public class PlayerControl extends KeyAdapter
 	@Override
 	public void keyPressed(KeyEvent e)
 	{
-		switch (e.getKeyCode())
-		{
-		// 按下上方向键
-		case KeyEvent.VK_UP:
-			this.gameControl.moveUp();
-			break;
-		// 按下下方向键
-		case KeyEvent.VK_DOWN:
-			this.gameControl.moveDown();
-			break;
-		// 按下左方向键
-		case KeyEvent.VK_LEFT:
-			this.gameControl.moveLeft();
-			break;
-		// 按下右方向键
-		case KeyEvent.VK_RIGHT:
-			this.gameControl.moveRight();
-			break;
-		// TODO:测试专用
-		case KeyEvent.VK_A:
-			this.gameControl.test();
-			break;
-		default:
-			break;
-		}
+		this.gameControl.actionByKeyCode(e.getKeyCode());
+//		switch (e.getKeyCode())
+//		{
+//		// 按下上方向键
+//		case KeyEvent.VK_UP:
+//			this.gameControl.moveUp();
+//			break;
+//		// 按下下方向键
+//		case KeyEvent.VK_DOWN:
+//			this.gameControl.moveDown();
+//			break;
+//		// 按下左方向键
+//		case KeyEvent.VK_LEFT:
+//			this.gameControl.moveLeft();
+//			break;
+//		// 按下右方向键
+//		case KeyEvent.VK_RIGHT:
+//			this.gameControl.moveRight();
+//			break;
+//		// TODO:测试专用
+//		case KeyEvent.VK_A:
+//			this.gameControl.test();
+//			break;
+//		default:
+//			break;
+//		}
 	}
 }

@@ -6,7 +6,7 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 
-import config.ConfigFactory;
+import config.FrameConfig;
 import config.GameConfig;
 import dto.GameDto;
 
@@ -50,15 +50,15 @@ public abstract class Layer
 	}
 
 	// 图片边框宽度
-	private static final int SIZE;
+	protected static final int BORDER;
 	// 内边距
 	protected static final int PADDING;
 	// 从配置中读取来初始化
 	static
 	{
-		GameConfig gameConfig = ConfigFactory.getGameConfig();
-		SIZE = gameConfig.getWindowSize();
-		PADDING = gameConfig.getPadding();
+		FrameConfig frameConfig = GameConfig.getFrameConfig();
+		BORDER = frameConfig.getBorder();
+		PADDING = frameConfig.getPadding();
 	}
 	
 	/**
@@ -81,31 +81,31 @@ public abstract class Layer
 	protected void createWindow(Graphics g)
 	{
 		// 1.左上
-		g.drawImage(IMG, x, y, x + SIZE, y + SIZE, 0, 0, SIZE, SIZE, null);
+		g.drawImage(IMG, x, y, x + BORDER, y + BORDER, 0, 0, BORDER, BORDER, null);
 		// 2.上
-		g.drawImage(IMG, x + SIZE, y, x - SIZE + width, y + SIZE, SIZE, 0, IMG_WIDTH
-				- SIZE, SIZE, null);
+		g.drawImage(IMG, x + BORDER, y, x - BORDER + width, y + BORDER, BORDER, 0, IMG_WIDTH
+				- BORDER, BORDER, null);
 		// 3.右上
-		g.drawImage(IMG, x - SIZE + width, y, x + width, y + SIZE, IMG_WIDTH - SIZE,
-				0, IMG_WIDTH, SIZE, null);
+		g.drawImage(IMG, x - BORDER + width, y, x + width, y + BORDER, IMG_WIDTH - BORDER,
+				0, IMG_WIDTH, BORDER, null);
 		// 4.中左
-		g.drawImage(IMG, x, y + SIZE, x + SIZE, y - SIZE + height, 0, SIZE,
-				SIZE, IMG_HEIGHT - SIZE, null);
+		g.drawImage(IMG, x, y + BORDER, x + BORDER, y - BORDER + height, 0, BORDER,
+				BORDER, IMG_HEIGHT - BORDER, null);
 		// 5.中
-		g.drawImage(IMG, x + SIZE, y + SIZE, x - SIZE + width, y - SIZE
-				+ height, SIZE, SIZE, IMG_WIDTH - SIZE, IMG_HEIGHT - SIZE, null);
+		g.drawImage(IMG, x + BORDER, y + BORDER, x - BORDER + width, y - BORDER
+				+ height, BORDER, BORDER, IMG_WIDTH - BORDER, IMG_HEIGHT - BORDER, null);
 		// 6.中右
-		g.drawImage(IMG, x - SIZE + width, y + SIZE, x + width, y - SIZE
-				+ height, IMG_WIDTH - SIZE, SIZE, IMG_WIDTH, IMG_HEIGHT - SIZE, null);
+		g.drawImage(IMG, x - BORDER + width, y + BORDER, x + width, y - BORDER
+				+ height, IMG_WIDTH - BORDER, BORDER, IMG_WIDTH, IMG_HEIGHT - BORDER, null);
 		// 7.左下
-		g.drawImage(IMG, x, y - SIZE + height, x + SIZE, y + height, 0, IMG_HEIGHT
-				- SIZE, SIZE, IMG_HEIGHT, null);
+		g.drawImage(IMG, x, y - BORDER + height, x + BORDER, y + height, 0, IMG_HEIGHT
+				- BORDER, BORDER, IMG_HEIGHT, null);
 		// 8.下
-		g.drawImage(IMG, x + SIZE, y - SIZE + height, x - SIZE + width, y
-				+ height, SIZE, IMG_HEIGHT - SIZE, IMG_WIDTH - SIZE, IMG_HEIGHT, null);
+		g.drawImage(IMG, x + BORDER, y - BORDER + height, x - BORDER + width, y
+				+ height, BORDER, IMG_HEIGHT - BORDER, IMG_WIDTH - BORDER, IMG_HEIGHT, null);
 		// 9.下右
-		g.drawImage(IMG, x - SIZE + width, y - SIZE + height, x + width, y
-				+ height, IMG_WIDTH - SIZE, IMG_HEIGHT - SIZE, IMG_WIDTH, IMG_HEIGHT, null);
+		g.drawImage(IMG, x - BORDER + width, y - BORDER + height, x + width, y
+				+ height, IMG_WIDTH - BORDER, IMG_HEIGHT - BORDER, IMG_WIDTH, IMG_HEIGHT, null);
 	}
 	
 	// 让子类重写

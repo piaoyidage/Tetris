@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
+import config.GameConfig;
 import dto.Player;
 
 /**
@@ -29,9 +30,9 @@ public abstract class LayerData extends Layer
 	protected static final Image IMG_NODATA = new ImageIcon("graphics/string/NoData.png").getImage();
 
 	/**
-	 * 5行数据库记录
+	 * 5行记录
 	 */
-	protected static final int MAX_ROWS = 5;
+	protected static final int MAX_ROWS = GameConfig.getDataConfig().getMaxRows();
 	
 	/**
 	 * 两个值槽间距

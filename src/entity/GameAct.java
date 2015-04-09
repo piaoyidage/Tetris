@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import config.GameConfig;
+
 
 /**
  * @author Ben
@@ -15,19 +17,7 @@ public class GameAct
 	/**
 	 * 七种不同下落方块
 	 */
-	private static List<Point[]> POINT_CONFIG;
-	
-	static
-	{
-		POINT_CONFIG = new ArrayList<Point[]>(7);
-		POINT_CONFIG.add(new Point[]{new Point(4, 0), new Point(3, 0), new Point(5, 0), new Point(6, 0)});
-		POINT_CONFIG.add(new Point[]{new Point(4, 0), new Point(3, 0), new Point(5, 0), new Point(4, 1)});
-		POINT_CONFIG.add(new Point[]{new Point(4, 0), new Point(3, 0), new Point(5, 0), new Point(3, 1)});
-		POINT_CONFIG.add(new Point[]{new Point(4, 0), new Point(5, 0), new Point(3, 1), new Point(4, 1)});
-		POINT_CONFIG.add(new Point[]{new Point(4, 0), new Point(5, 0), new Point(4, 1), new Point(5, 1)});
-		POINT_CONFIG.add(new Point[]{new Point(4, 0), new Point(3, 0), new Point(5, 0), new Point(5, 1)});
-		POINT_CONFIG.add(new Point[]{new Point(4, 0), new Point(3, 0), new Point(4, 1), new Point(5, 1)});
-	}
+	private final List<Point[]> POINT_CONFIG = GameConfig.getSystemConfig().getPointConfig();
 	
 	private int actType;
 	

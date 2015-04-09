@@ -5,7 +5,7 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
-import config.ConfigFactory;
+import config.FrameConfig;
 import config.GameConfig;
 
 /**
@@ -18,20 +18,20 @@ public class JFrameGame extends JFrame
 	public JFrameGame(JPanelGame panel)
 	{
 		// 获得游戏配置 来设置游戏
-		GameConfig gameConfig = ConfigFactory.getGameConfig();
+		FrameConfig frameConfig = GameConfig.getFrameConfig();
 		// 1.设置标题
-		this.setTitle(gameConfig.getTitle());
+		this.setTitle(frameConfig.getTitle());
 		// 2.设置关闭属性
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// 3.TODO 设置窗口大小
-		this.setSize(gameConfig.getWidth(), gameConfig.getHeight());
+		this.setSize(frameConfig.getWidth(), frameConfig.getHeight());
 		// 4.设置不允许窗口大小调整
 		this.setResizable(false);
 		// 5.使用Toolkit来调整窗口位置
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Dimension d = toolkit.getScreenSize();
 		int x = d.width - this.getWidth() >> 1;
-		int y = (d.height - this.getHeight() >> 1) - gameConfig.getWindowUp();
+		int y = (d.height - this.getHeight() >> 1) - frameConfig.getWindowUp();
 		this.setLocation(x, y);
 		// 6.设置panel
 		this.setContentPane(panel);

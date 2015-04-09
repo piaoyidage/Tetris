@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import dto.Player;
@@ -13,19 +14,24 @@ import dto.Player;
 public class DataBase implements Data
 {
 	// 驱动名
-	private static String DB_DRIVER = "com.mysql.jdbc.Driver";
+	private final String DB_DRIVER;
 	// url
-	private static String DB_URL = "jdbc:mysql://localhost:3306/tetris_record";
+	private final String DB_URL;
 	// 用户名
-	private static String DB_USER = "root";
+	private final String DB_USER;
 	// 密码
-	private static String DB_PASSWD = "root";
+	private final String DB_PASSWD;
 	
-	private static String LOAD_SQL = "select username, point from user_point where type_id=1 order by point desc limit 5";
+	private static String SELECT_SQL = "select username, point from user_point where type_id=1 order by point desc limit 5";
 	private static String INSERT_SQL = "insert into user_point (`username`, `point`, `type_id`) values (?, ?, ?)";
 	
-	static 
+	
+	public DataBase(HashMap<String, String> map)
 	{
+		DB_DRIVER = map.get("dbDriver");
+		DB_URL = map.get("dbUrl");
+		DB_USER = map.get("dbUser");
+		DB_PASSWD = map.get("dbPasswd");
 		try
 		{
 			// 加载驱动
@@ -49,7 +55,7 @@ public class DataBase implements Data
 			// 获取连接
 			conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
 			// 执行SQL语句
-			ps = conn.prepareStatement(LOAD_SQL);
+			ps = conn.prepareStatement(SELECT_SQL);
 			rs = ps.executeQuery();
 			while (rs.next())
 			{

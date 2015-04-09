@@ -38,7 +38,8 @@ public class LayerBackground extends Layer
 	@Override
 	public void paint(Graphics g)
 	{
-		g.drawImage(IMG_BG.get(1), 0, 0, null);
+		int index = this.dto.getCurLevel() % IMG_BG.size();
+		g.drawImage(IMG_BG.get(index), 0, 0, null);
 	}
 
 }

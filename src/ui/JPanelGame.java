@@ -7,7 +7,7 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import config.ConfigFactory;
+import config.FrameConfig;
 import config.GameConfig;
 import config.LayerConfig;
 import control.PlayerControl;
@@ -56,9 +56,9 @@ public class JPanelGame extends JPanel
 		try
 		{
 			// 获得游戏配置信息
-			GameConfig gameConfig = ConfigFactory.getGameConfig();
+			FrameConfig frameConfig = GameConfig.getFrameConfig();
 			// 层配置
-			List<LayerConfig> layersConfig = gameConfig.getLayersConfig();
+			List<LayerConfig> layersConfig = frameConfig.getLayersConfig();
 			// 创建层集合
 			layers = new ArrayList<Layer>(layersConfig.size());
 			// 遍历读取

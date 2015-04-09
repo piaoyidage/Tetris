@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <game>
-	<frame width="1200" height="700" title="Java俄罗斯方块" windowUp="18" padding="16" windowSize="10">
+	<frame width="1200" height="700" title="Java俄罗斯方块" windowUp="18" padding="16" border="10">
 		<layer className="ui.LayerBackground" x="0" y="0" w="0" h="0"/>
 		<layer className="ui.LayerDatabase" x="40" y="32" w="340" h ="282"/>
 		<layer className="ui.LayerDisk" x="40" y="346" w="340" h ="282"/>
@@ -12,7 +12,42 @@
 		<layer className="ui.LayerAbout" x="794" y="538" w="340" h ="90"/>
 	</frame>
 	
-	<system></system>
+	<system >
+		<!-- 下落方块组的各个方块的初始坐标 -->
+		<rect>
+			<point x="4" y="0" /><point x="3" y="0" /><point x="5" y="0" /><point x="6" y="0" />
+		</rect>
+		<rect>
+			<point x="4" y="0" /><point x="3" y="0" /><point x="5" y="0" /><point x="4" y="1" />
+		</rect>
+		<rect>
+			<point x="4" y="0" /><point x="3" y="0" /><point x="5" y="0" /><point x="3" y="1" />
+		</rect>
+		<rect>
+			<point x="4" y="0" /><point x="5" y="0" /><point x="3" y="1" /><point x="4" y="1" />
+		</rect>
+		<rect>
+			<point x="4" y="0" /><point x="5" y="0" /><point x="4" y="1" /><point x="5" y="1" />
+		</rect>
+		<rect>
+			<point x="4" y="0" /><point x="3" y="0" /><point x="5" y="0" /><point x="5" y="1" />
+		</rect>
+		<rect>
+			<point x="4" y="0" /><point x="3" y="0" /><point x="4" y="1" /><point x="5" y="1" />
+		</rect>
+	</system>
 	
-	<data></data>
+	<data maxRows="5">
+		<!-- 数据库数据 -->
+		<dataA className="dao.DataBase">
+			<param key="dbDriver" value="com.mysql.jdbc.Driver"/>
+			<param key="dbUrl" value="jdbc:mysql://localhost:3306/tetris_record"/>
+			<param key="dbUser" value="root"/>
+			<param key="dbPasswd" value="root"/>
+		</dataA>
+		<!-- 本地路径 -->
+		<dataB className="dao.DataDisk">
+			<param key="path" value="save\\local.txt" />
+		</dataB>
+	</data>
 </game>
