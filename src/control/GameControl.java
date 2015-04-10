@@ -1,13 +1,18 @@
 package control;
 
 import java.awt.event.KeyEvent;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
-import service.GameService;
+import service.GameTetris;
 import ui.JPanelGame;
+import ui.config.TextCtrl;
 import config.DataInterfaceConfig;
 import config.GameConfig;
 import dao.Data;
@@ -38,9 +43,9 @@ public class GameControl
 	/**
 	 * 游戏逻辑层
 	 */
-	private GameService gameService;
+	private GameTetris gameService;
 	
-	public GameControl(JPanelGame jpanelGame, GameService gameService)
+	public GameControl(JPanelGame jpanelGame, GameTetris gameService)
 	{
 		
 		this.panelGame = jpanelGame;
@@ -49,16 +54,32 @@ public class GameControl
 		keyActions = new HashMap<Integer, Method>();
 		try
 		{
-			keyActions.put(KeyEvent.VK_UP, this.gameService.getClass().getMethod("moveUp"));
-			keyActions.put(KeyEvent.VK_DOWN, this.gameService.getClass().getMethod("moveDown"));
-			keyActions.put(KeyEvent.VK_LEFT, this.gameService.getClass().getMethod("moveLeft"));
-			keyActions.put(KeyEvent.VK_RIGHT, this.gameService.getClass().getMethod("moveRight"));
-			keyActions.put(KeyEvent.VK_A, this.gameService.getClass().getMethod("test"));
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream("data//config.dat"));
+			HashMap<Integer, String> keyMap = (HashMap<Integer, String>)ois.readObject();
+			Set<Entry<Integer, String>> entrySet = keyMap.entrySet();
+			for (Entry<Integer, String> e : entrySet)
+			{
+				keyActions.put(e.getKey(), this.gameService.getClass().getMethod(e.getValue()));
+			}
+			ois.close();
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
+		
+//		try
+//		{
+//			keyActions.put(KeyEvent.VK_UP, this.gameService.getClass().getMethod("moveUp"));
+//			keyActions.put(KeyEvent.VK_DOWN, this.gameService.getClass().getMethod("moveDown"));
+//			keyActions.put(KeyEvent.VK_LEFT, this.gameService.getClass().getMethod("moveLeft"));
+//			keyActions.put(KeyEvent.VK_RIGHT, this.gameService.getClass().getMethod("moveRight"));
+//			keyActions.put(KeyEvent.VK_A, this.gameService.getClass().getMethod("test"));
+//		}
+//		catch (Exception e)
+//		{
+//			e.printStackTrace();
+//		}
 		
 		// TODO: 测试
 		// 从数据接口A获得数据库记录
