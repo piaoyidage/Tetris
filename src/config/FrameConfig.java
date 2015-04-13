@@ -36,6 +36,13 @@ public class FrameConfig
 	 */
 	private List<LayerConfig> layersConfig;
 	
+	private ButtonConfig buttonConfig;
+	
+	public ButtonConfig getButtonConfig()
+	{
+		return buttonConfig;
+	}
+
 	public FrameConfig(Element frame)
 	{
 		width = Integer.parseInt(frame.attributeValue("width"));
@@ -58,6 +65,9 @@ public class FrameConfig
 			LayerConfig cl = new LayerConfig(className, x, y, w, h);
 			layersConfig.add(cl);
 		}
+		
+		// frame×Ó½Úµãbutton
+		buttonConfig = new ButtonConfig(frame.element("button"));
 	}
 	
 	public String getTitle()

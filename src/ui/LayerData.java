@@ -72,7 +72,7 @@ public abstract class LayerData extends Layer
 			}
 			else
 			{
-				g.setColor(Color.red);
+				g.setColor(Color.yellow);
 				g.setFont(new Font("华文楷体", Font.BOLD, 22));
 				// 绘制姓名
 				g.drawString(players.get(i).getUsername(), this.x + (PADDING << 1), expYStart + 22);

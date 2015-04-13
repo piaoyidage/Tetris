@@ -6,6 +6,8 @@ import java.awt.Point;
 
 import javax.swing.ImageIcon;
 
+import entity.GameAct;
+
 /**
  * 游戏运行界面
  * @author Ben
@@ -38,32 +40,30 @@ public class LayerGame extends Layer
 	public void paint(Graphics g)
 	{
 		this.createWindow(g);
-		
-		Point[] actPoints = this.dto.getGameAct().getActPoints();
-		
-		// 绘制阴影
-		this.drawShadow(IMG_SHADOW, true, actPoints, g);
-		
-		// 绘制方块
-		// 根据不同的actType打印不同颜色的方块
-		int actType = this.dto.getGameAct().getActType();
-		// TODO
-		for (int i = 0; i < actPoints.length; i++)
+		GameAct gameAct = this.dto.getGameAct();
+		if (gameAct != null)
 		{
-			this.drawActByPoint(actPoints[i].x, actPoints[i].y, actType+1, g);
-//			g.drawImage(ACT, this.x + (actPoints[i].x << LEFT_SHIFT)  + 10, 
-//							 this.y + (actPoints[i].y << LEFT_SHIFT) + 10, 
-//							 this.x + (actPoints[i].x + 1 << LEFT_SHIFT) + 10,
-//							 this.y + (actPoints[i].y + 1 << LEFT_SHIFT) + 10,
-//							 (actType+1) << LEFT_SHIFT, 0, (actType+2) << LEFT_SHIFT, 1 << LEFT_SHIFT, null);
+			Point[] actPoints = gameAct.getActPoints();
+			// 绘制阴影
+			this.drawShadow(IMG_SHADOW, actPoints, g);
+			// 绘制方块
+			this.drawAct(actPoints, g);
 		}
-		
 		// 绘制地图
-		// TODO 如果输了 index == 8 
+		this.drawMap(g);
+	}
+	
+	private void drawMap(Graphics g)
+	{
+		// TODO 如果输了 index == 8
 		boolean[][] gameMap = this.dto.getGameMap();
 		// 根据不同等级方块堆积的颜色不同
 		int level = this.dto.getCurLevel();
 		int index = level == 0 ? 0 : (level - 1) % 7 + 1;
+		if (!this.dto.isStart())
+		{
+			index = 8;
+		}
 		for (int y = 0; y < gameMap.length; y++)
 		{
 			for (int x = 0; x < gameMap[y].length; x++)
@@ -71,16 +71,35 @@ public class LayerGame extends Layer
 				if (gameMap[y][x])
 				{
 					this.drawActByPoint(x, y, index, g);
-//					g.drawImage(ACT, this.x + x*ACT_SIZE + 10, 
-//						 		this.y + y*ACT_SIZE + 10, 
-//						 		this.x + x*ACT_SIZE + ACT_SIZE + 10,
-//						 		this.y + y*ACT_SIZE + ACT_SIZE + 10,
-//						 		0, 0, 32, 32, null);
+					// g.drawImage(ACT, this.x + x*ACT_SIZE + 10,
+					// this.y + y*ACT_SIZE + 10,
+					// this.x + x*ACT_SIZE + ACT_SIZE + 10,
+					// this.y + y*ACT_SIZE + ACT_SIZE + 10,
+					// 0, 0, 32, 32, null);
 				}
 			}
 		}
+
 	}
-	
+
+	private void drawAct(Point[] actPoints, Graphics g)
+	{
+		// 绘制方块
+		// 根据不同的actType打印不同颜色的方块
+		int actType = this.dto.getGameAct().getActType();
+		// TODO
+		for (int i = 0; i < actPoints.length; i++)
+		{
+			this.drawActByPoint(actPoints[i].x, actPoints[i].y, actType + 1, g);
+			// g.drawImage(ACT, this.x + (actPoints[i].x << LEFT_SHIFT) + 10,
+			// this.y + (actPoints[i].y << LEFT_SHIFT) + 10,
+			// this.x + (actPoints[i].x + 1 << LEFT_SHIFT) + 10,
+			// this.y + (actPoints[i].y + 1 << LEFT_SHIFT) + 10,
+			// (actType+1) << LEFT_SHIFT, 0, (actType+2) << LEFT_SHIFT, 1 <<
+			// LEFT_SHIFT, null);
+		}
+	}
+
 	/**
 	 * 绘制阴影
 	 * @param imgShadow
@@ -88,9 +107,9 @@ public class LayerGame extends Layer
 	 * @param actPoints
 	 * @param g
 	 */
-	private void drawShadow(Image imgShadow, boolean isShadow, Point[] actPoints, Graphics g)
+	private void drawShadow(Image imgShadow, Point[] actPoints, Graphics g)
 	{
-		if (!isShadow)
+		if (!this.dto.isShowShadow())
 		{
 			return;
 		}
@@ -119,6 +138,8 @@ public class LayerGame extends Layer
 	 */
 	public void drawActByPoint(int x, int y, int index, Graphics g)
 	{
+		// TODO 8
+		index = this.dto.isStart() ? index : 8;
 		// TODO 10
 		g.drawImage(ACT, this.x + (x << LEFT_SHIFT)  + 10, 
 				 	this.y + (y << LEFT_SHIFT) + 10, 

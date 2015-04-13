@@ -5,14 +5,19 @@
 		<layer className="ui.LayerDatabase" x="40" y="32" w="340" h ="282"/>
 		<layer className="ui.LayerDisk" x="40" y="346" w="340" h ="282"/>
 		<layer className="ui.LayerGame" x="417" y="32" w="340" h ="596"/>
-		<layer className="ui.LayerButton" x="794" y="32" w="340" h ="125"/>
-		<layer className="ui.LayerNext" x="794" y="189" w="165" h ="125"/>
-		<layer className="ui.LayerLevel" x="969" y="189" w="165" h ="125"/>
-		<layer className="ui.LayerPoint" x="794" y="346" w="340" h ="160"/>
-		<layer className="ui.LayerAbout" x="794" y="538" w="340" h ="90"/>
+		<layer className="ui.LayerButton" x="794" y="32" w="340" h ="105"/>
+		<layer className="ui.LayerNext" x="794" y="169" w="165" h ="125"/>
+		<layer className="ui.LayerLevel" x="969" y="169" w="165" h ="125"/>
+		<layer className="ui.LayerPoint" x="794" y="326" w="340" h ="160"/>
+		<layer className="ui.LayerAbout" x="794" y="518" w="340" h ="110"/>
+		<!-- 开始按钮和设置按钮 -->
+		<button>
+			<start x="828" y="60" w="120" h="50"/>
+			<userConfig x="976" y="60" w="120" h="50"/>
+		</button>
 	</frame>
-	
-	<system >
+	<!-- 消行20升级 -->
+	<system maxRow="17" maxCol="9" levelUp="20">
 		<!-- 下落方块组的各个方块的初始坐标 -->
 		<rect>
 			<point x="4" y="0" /><point x="3" y="0" /><point x="5" y="0" /><point x="6" y="0" />
@@ -35,6 +40,11 @@
 		<rect>
 			<point x="4" y="0" /><point x="3" y="0" /><point x="4" y="1" /><point x="5" y="1" />
 		</rect>
+		<!-- 消行对应的分数 -->
+		<addPoint rm="1" point="10"/>
+		<addPoint rm="2" point="30"/>
+		<addPoint rm="3" point="60"/>
+		<addPoint rm="4" point="100"/>
 	</system>
 	
 	<data maxRows="5">

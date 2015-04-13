@@ -2,21 +2,47 @@ package config;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.dom4j.Element;
 
 public class SystemConfig
 {
+	private int maxRow;
+	private int maxCol;
+	private int levelUp;
+	
 	private final List<Point[]> pointConfig;
+	
+	private final HashMap<Integer, Integer> addPoint;
 	
 	public List<Point[]> getPointConfig()
 	{
 		return pointConfig;
 	}
 
+	public HashMap<Integer, Integer> getAddPoint()
+	{
+		return addPoint;
+	}
+
+	@SuppressWarnings("unchecked")
 	public SystemConfig(Element system)
 	{
+		maxRow = Integer.parseInt(system.attributeValue("maxRow"));
+		maxCol = Integer.parseInt(system.attributeValue("maxCol"));
+		levelUp = Integer.parseInt(system.attributeValue("levelUp"));
+		
+		List<Element> rmPoint = system.elements("addPoint");
+		addPoint = new HashMap<Integer, Integer>();
+		for (Element e : rmPoint)
+		{
+			int rm = Integer.parseInt(e.attributeValue("rm"));
+			int point = Integer.parseInt(e.attributeValue("point"));
+			addPoint.put(rm, point);
+		}
+		
 		// ·½¿é×é
 		List<Element> rects = system.elements("rect");
 		pointConfig = new ArrayList(rects.size());
@@ -33,6 +59,21 @@ public class SystemConfig
 			}
 			pointConfig.add(p);
 		}
+	}
+
+	public int getMaxRow()
+	{
+		return maxRow;
+	}
+
+	public int getMaxCol()
+	{
+		return maxCol;
+	}
+
+	public int getLevelUp()
+	{
+		return levelUp;
 	}
 
 }

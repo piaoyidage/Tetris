@@ -4,10 +4,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import config.GameConfig;
 import entity.GameAct;
 
 public class GameDto
 {
+	/**
+	 * 游戏地图的宽度和高度
+	 */
+	public int GAME_ZONE_W = GameConfig.getSystemConfig().getMaxCol() + 1;
+	public int GAME_ZONE_H = GameConfig.getSystemConfig().getMaxRow() + 1;
+	
 	/**
 	 * 数据库记录
 	 */
@@ -18,6 +25,21 @@ public class GameDto
 	 */
 	private List<Player> localRecord;
 	
+	/**
+	 * 是否显示阴影
+	 */
+	private boolean isShowShadow;
+	
+	public boolean isShowShadow()
+	{
+		return isShowShadow;
+	}
+
+	public void changedShowShadow()
+	{
+		this.isShowShadow = !this.isShowShadow;
+	}
+
 	/**
 	 * 游戏地图
 	 */
@@ -49,6 +71,8 @@ public class GameDto
 	 */
 	private int curRemoveRowLines;
 	
+	private boolean start;
+	
 	public GameDto()
 	{
 		
@@ -61,7 +85,7 @@ public class GameDto
 	private void init()
 	{
 		
-		gameMap = new boolean[18][10];
+		gameMap = new boolean[GAME_ZONE_H][GAME_ZONE_W];
 	}
 
 	public List<Player> getDatabaseRecord()
@@ -79,6 +103,7 @@ public class GameDto
 	 * @param players
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public List<Player> setFullRecord(List<Player> players)
 	{
 		if (players == null)
@@ -161,6 +186,16 @@ public class GameDto
 	public void setCurRemoveRowLines(int curRemoveRowLines)
 	{
 		this.curRemoveRowLines = curRemoveRowLines;
+	}
+
+	public boolean isStart()
+	{
+		return start;
+	}
+
+	public void setStart(boolean start)
+	{
+		this.start = start;
 	}
 
 	

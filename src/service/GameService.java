@@ -9,45 +9,34 @@ public interface GameService
 	/**
 	 * 旋转
 	 */
-	public void moveUp();
+	public boolean moveUp();
 	/**
 	 * 左移
 	 */
-	public void moveLeft();
+	public boolean moveLeft();
 	/**
 	 * 下移
 	 */
-	public void moveDown();
+	public boolean moveDown();
 	/**
 	 * 右移
 	 */
-	public void moveRight();
+	public boolean moveRight();
 	/**
 	 * 上功能键
 	 */
-	public void keyUp();
+	public boolean keyUp();
 	/**
 	 * 左功能键
 	 */
-	public void keyLeft();
+	public boolean keyLeft();
 	/**
 	 * 下功能键
 	 */
-	public void keyDown();
+	public boolean keyDown();
 	/**
 	 * 右功能键
 	 */
-	public void keyRight();
+	public boolean keyRight();
 	
-	/**
-	 * 设置数据库记录
-	 * @param players
-	 */
-	public void setDatabaseRecord(List<Player> players);
-	
-	/**
-	 * 设置本地记录
-	 * @param players
-	 */
-	public void setLocalRecord(List<Player> players);
 }

@@ -33,7 +33,11 @@ public class LayerNext extends Layer
 	{
 		this.createWindow(g);
 		//g.drawImage(NEXT_ACT[this.dto.getNext()], this.x + 32, this.y + 32, null);
-		this.drawImageAtCenter(NEXT_ACT[this.dto.getNext()], g);
+		// 如果开始状态绘制下一个方块
+		if (this.dto.isStart())
+		{
+			this.drawImageAtCenter(NEXT_ACT[this.dto.getNext()], g);
+		}
 	}
 
 	
