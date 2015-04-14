@@ -12,7 +12,7 @@ import java.util.Set;
 import service.GameTetris;
 import ui.JFrameGame;
 import ui.JPanelGame;
-import ui.config.JFrameConfig;
+import ui.window.JFrameConfig;
 import config.DataInterfaceConfig;
 import config.GameConfig;
 import dao.Data;
@@ -51,6 +51,8 @@ public class GameControl
 	private GameDto dto;
 	
 	private JFrameConfig userConfig;
+	
+	private Thread gameThread = null;
 	
 	public GameControl()
 	{
@@ -162,9 +164,50 @@ public class GameControl
 	 */
 	public void start()
 	{
+		// 将按钮设置为不可点击
 		this.panelGame.setButtonStatus(false);
-		this.gameService.startMainThread();
+		// 初始游戏数据
+		this.gameService.startGame();
+		gameThread = new MainThread();
+		// 开启线程
+		gameThread.start();
 		this.panelGame.repaint();
+	}
+	
+	public class MainThread extends Thread
+	{
+		@Override
+		public void run()
+		{
+			// 刷新画面
+			panelGame.repaint();
+			while (true)
+			{
+				if (!dto.isStart())
+				{
+					break;
+				}
+				try
+				{
+					// 休眠0.5秒
+					Thread.sleep(500);
+				}
+				catch (InterruptedException e)
+				{
+					e.printStackTrace();
+				}
+				// 如果是暂停则不下落
+				if (dto.isPause())
+				{
+					continue;
+				}
+				
+				// 方块下落
+				gameService.moveDown();
+				// 刷新画面
+				panelGame.repaint();
+			}
+		}
 	}
 
 }

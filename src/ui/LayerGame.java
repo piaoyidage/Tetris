@@ -25,6 +25,11 @@ public class LayerGame extends Layer
 	 */
 	private static final Image IMG_SHADOW = new ImageIcon("graphics/game/shadow.png").getImage();
 	
+	/**
+	 * ‘›Õ£Õº∆¨
+	 */
+	private static final Image IMG_PAUSE = new ImageIcon("graphics/picture/pause.png").getImage();
+	
 	private static final int LEFT_SIDE = 9;
 	private static final int RIGHT_SIDE = 0;
 	
@@ -51,6 +56,11 @@ public class LayerGame extends Layer
 		}
 		// ªÊ÷∆µÿÕº
 		this.drawMap(g);
+		
+		if (this.dto.isPause())
+		{
+			this.drawImageAtCenter(IMG_PAUSE, g);
+		}
 	}
 	
 	private void drawMap(Graphics g)

@@ -39,4 +39,9 @@ public interface GameService
 	 */
 	public boolean keyRight();
 	
+	/**
+	 * ©╙й╪сно╥
+	 */
+	public void startGame();
+	
 }

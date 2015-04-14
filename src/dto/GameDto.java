@@ -40,6 +40,9 @@ public class GameDto
 		this.isShowShadow = !this.isShowShadow;
 	}
 
+	private boolean isPause;
+	
+	
 	/**
 	 * сно╥╣ьм╪
 	 */
@@ -196,6 +199,16 @@ public class GameDto
 	public void setStart(boolean start)
 	{
 		this.start = start;
+	}
+
+	public boolean isPause()
+	{
+		return isPause;
+	}
+
+	public void changePause()
+	{
+		this.isPause = !this.isPause;
 	}
 
 	
