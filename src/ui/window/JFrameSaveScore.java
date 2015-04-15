@@ -1,7 +1,10 @@
 package ui.window;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -10,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import util.FrameUtil;
+import control.GameControl;
 
 /**
  * 
@@ -21,25 +25,32 @@ public class JFrameSaveScore extends JFrame
 	private JButton btnOk;
 	private JTextField tfName;
 	private JLabel labelScore;
+	private JLabel labelErrorMsg;
 	
-	public JFrameSaveScore()
+	private GameControl gameControl;
+	
+	public JFrameSaveScore(GameControl gameControl)
 	{
+		this.gameControl = gameControl;
+		
 		this.setTitle("玩家得分");
 		this.setSize(256, 128);
 		this.setResizable(false);
 		this.setLayout(new BorderLayout());
 		this.createComponent();
-		
+		this.createAction();
 		FrameUtil.setFrameCenter(this);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setVisible(true);
+		
 	}
 	
 	private void createComponent()
 	{
 		JPanel north = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		labelScore = new JLabel("您的得分是:8888");
+		labelScore = new JLabel();
 		north.add(labelScore);
+		labelErrorMsg = new JLabel();
+		labelErrorMsg.setForeground(Color.RED);
+		north.add(labelErrorMsg);
 		this.add(north, BorderLayout.NORTH);
 		
 		JPanel center = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -54,9 +65,32 @@ public class JFrameSaveScore extends JFrame
 		this.add(south, BorderLayout.SOUTH);
 		
 	}
-
-	public static void main(String[] args)
+	
+	public void createAction()
 	{
-		new JFrameSaveScore();
+		btnOk.addActionListener(new ActionListener()
+		{
+
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				String name = tfName.getText();
+				if (name.length() > 16 || name == null || name.equals(""))
+				{
+					labelErrorMsg.setText("用户名错误");
+				}
+				else
+				{
+					setVisible(false);
+					gameControl.saveScore(name);
+				}
+			}
+		});
+	}
+
+	public void showSaveWindow(int point)
+	{
+		this.labelScore.setText("您的得分是：" + point);
+		this.setVisible(true);
 	}
 }

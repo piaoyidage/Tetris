@@ -1,13 +1,14 @@
 package config;
 
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import org.dom4j.Element;
 
-public class SystemConfig
+public class SystemConfig implements Serializable
 {
 	private int maxRow;
 	private int maxCol;

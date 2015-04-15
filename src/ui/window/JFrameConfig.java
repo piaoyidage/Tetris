@@ -7,6 +7,9 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -15,15 +18,18 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
-import control.GameControl;
 import util.FrameUtil;
+import control.GameControl;
 
 /**
  * Swing½çÃæ£¬¿ØÖÆ°´Å¥
@@ -36,11 +42,18 @@ public class JFrameConfig extends JFrame
 	
 	private static final String PATH = "data//config.dat";
 	
+	private static final Image IMG_SKIN = new ImageIcon("graphics/picture/skin.png").getImage();
+	
 	private JButton btnOk;
 	private JButton btnCancel;
 	private JButton btnExecute;
 	
 	private JLabel errorMsg;
+	
+	private DefaultListModel skinData;
+	private JList skinList = null;
+	
+	private JPanel skinView;
 	
 	private TextCtrl[] keyTexts = new TextCtrl[8];
 	/**
@@ -107,8 +120,28 @@ public class JFrameConfig extends JFrame
 	{
 		JTabbedPane jt = new JTabbedPane();
 		jt.add("¼üÎ»¿ØÖÆ", this.createControlPanel());
-		jt.add("Æ¤·ô¿ØÖÆ", new JLabel("Æ¤·ô"));
+		jt.add("Æ¤·ô¿ØÖÆ", this.createSkinPanel());
 		return jt;
+	}
+
+	private JPanel createSkinPanel()
+	{
+		JPanel skinPanel = new JPanel(new BorderLayout());
+		skinData = new DefaultListModel<Object>();
+		skinData.addElement("Ä¬ÈÏÆ¤·ô");
+		skinList = new JList(skinData);
+		skinPanel.add(new JScrollPane(skinList), BorderLayout.WEST);
+		
+		this.skinView = new JPanel()
+		{
+			@Override
+			protected void paintComponent(Graphics g)
+			{
+				g.drawImage(IMG_SKIN, 0, 0, null);
+			}
+		};
+		skinPanel.add(skinView, BorderLayout.CENTER);
+		return skinPanel;
 	}
 
 	private JPanel createControlPanel()
@@ -241,4 +274,5 @@ public class JFrameConfig extends JFrame
 		}
 		return true;
 	}
+	
 }

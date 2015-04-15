@@ -1,5 +1,7 @@
 package config;
 
+import java.io.Serializable;
+
 import org.dom4j.Element;
 
 /**
@@ -7,7 +9,7 @@ import org.dom4j.Element;
  * @author Ben
  *
  */
-public class ButtonConfig
+public class ButtonConfig implements Serializable
 {
 	private int startX;
 	private int startY;

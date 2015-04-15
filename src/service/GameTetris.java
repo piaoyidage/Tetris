@@ -94,10 +94,6 @@ public class GameTetris implements GameService
 	}
 	
 	
-	private void afterGameOver()
-	{
-
-	}
 
 	/**
 	 * 游戏是否结束
@@ -186,15 +182,19 @@ public class GameTetris implements GameService
 	public boolean keyRight()
 	{
 		// 作弊键位
-		int point = this.dto.getCurPoint();
-		int level = this.dto.getCurLevel();
-		int rmLines = this.dto.getCurRemoveRowLines();
-		point += 10;
-		level += 1;
-		rmLines += 1;
-		this.dto.setCurLevel(level);
-		this.dto.setCurPoint(point);
-		this.dto.setCurRemoveRowLines(rmLines);
+//		int point = this.dto.getCurPoint();
+//		int level = this.dto.getCurLevel();
+//		int rmLines = this.dto.getCurRemoveRowLines();
+//		point += 10;
+//		level += 1;
+//		rmLines += 1;
+//		this.dto.setCurLevel(level);
+//		this.dto.setCurPoint(point);
+//		this.dto.setCurRemoveRowLines(rmLines);
+		
+		this.dto.setCheat(true);
+		addPoint(4);
+		
 		return true;
 	}
 	
@@ -281,5 +281,6 @@ public class GameTetris implements GameService
 		this.dto.setGameAct(gameAct);
 		// 将游戏状态设为开始
 		this.dto.setStart(true);
+		this.dto.init();
 	}
 }

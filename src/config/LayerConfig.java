@@ -1,11 +1,13 @@
 package config;
 
+import java.io.Serializable;
+
 /**
  * 对应于cfg.xml的layer节点
  * @author Ben
  *
  */
-public class LayerConfig
+public class LayerConfig implements Serializable
 {
 	private String className;
 	private int x;

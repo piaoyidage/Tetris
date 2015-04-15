@@ -1,5 +1,6 @@
 package control;
 
+import java.awt.Dialog;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.lang.reflect.Constructor;
@@ -13,30 +14,30 @@ import service.GameTetris;
 import ui.JFrameGame;
 import ui.JPanelGame;
 import ui.window.JFrameConfig;
+import ui.window.JFrameSaveScore;
 import config.DataInterfaceConfig;
 import config.GameConfig;
 import dao.Data;
 import dto.GameDto;
-
+import dto.Player;
 
 /**
- * 游戏控制器 
- * 接受玩家键盘控制
- * 控制游戏逻辑
+ * 游戏控制器 接受玩家键盘控制 控制游戏逻辑
+ * 
  * @author Ben
- *
+ * 
  */
 public class GameControl
 {
 	// TODO 测试
 	private Data dataA;
 	private Data dataB;
-	
+
 	/**
 	 * key 和 action的映射
 	 */
 	private Map<Integer, Method> keyActions;
-	
+
 	/**
 	 * 游戏界面层
 	 */
@@ -49,11 +50,13 @@ public class GameControl
 	 * 游戏数据
 	 */
 	private GameDto dto;
-	
+
 	private JFrameConfig userConfig;
-	
+
 	private Thread gameThread = null;
-	
+
+	private JFrameSaveScore frameSaveScore;
+
 	public GameControl()
 	{
 		// 创建游戏数据源
@@ -61,20 +64,24 @@ public class GameControl
 		// 创建游戏逻辑层（连接数据源）
 		this.gameService = new GameTetris(dto);
 		// 从数据接口A获得数据库记录
-		this.dataA = this.createDataObject(GameConfig.getDataConfig().getDataA());
+		this.dataA = this.createDataObject(GameConfig.getDataConfig()
+				.getDataA());
 		// 设置数据库记录到游戏
 		this.dto.setDatabaseRecord(dataA.loadData());
 		// 从数据接口B获取本地记录
-		this.dataB = this.createDataObject(GameConfig.getDataConfig().getDataB());
+		this.dataB = this.createDataObject(GameConfig.getDataConfig()
+				.getDataB());
 		// 设置本地记录到游戏
 		this.dto.setLocalRecord(dataB.loadData());
 		// 创建游戏面板（连接数据源 连接游戏控制器）
 		this.panelGame = new JPanelGame(this, dto);
-		
+
+		frameSaveScore = new JFrameSaveScore(this);
+
 		this.setActionConfig();
 		// 初始化用户控制窗口
 		this.userConfig = new JFrameConfig(this);
-		
+
 		// 创建游戏界面，安装游戏面板
 		new JFrameGame(this.panelGame).setTitle("俄罗斯方块");
 	}
@@ -84,12 +91,15 @@ public class GameControl
 		keyActions = new HashMap<Integer, Method>();
 		try
 		{
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream("data//config.dat"));
-			HashMap<Integer, String> keyMap = (HashMap<Integer, String>)ois.readObject();
+			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(
+					"data//config.dat"));
+			HashMap<Integer, String> keyMap = (HashMap<Integer, String>) ois
+					.readObject();
 			Set<Entry<Integer, String>> entrySet = keyMap.entrySet();
 			for (Entry<Integer, String> e : entrySet)
 			{
-				keyActions.put(e.getKey(), this.gameService.getClass().getMethod(e.getValue()));
+				keyActions.put(e.getKey(), this.gameService.getClass()
+						.getMethod(e.getValue()));
 			}
 			ois.close();
 		}
@@ -98,10 +108,12 @@ public class GameControl
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * 创建数据对象
-	 * @param dataConfig 数据配置信息
+	 * 
+	 * @param dataConfig
+	 *            数据配置信息
 	 * @return
 	 */
 	private Data createDataObject(DataInterfaceConfig dataConfig)
@@ -121,9 +133,9 @@ public class GameControl
 		return null;
 	}
 
-
 	/**
 	 * 根据keyCode选择移动或者旋转
+	 * 
 	 * @param keyCode
 	 */
 	public void actionByKeyCode(int keyCode)
@@ -139,7 +151,7 @@ public class GameControl
 		{
 			e.printStackTrace();
 		}
-		
+
 		panelGame.repaint();
 	}
 
@@ -166,6 +178,10 @@ public class GameControl
 	{
 		// 将按钮设置为不可点击
 		this.panelGame.setButtonStatus(false);
+
+		this.frameSaveScore.setVisible(false);
+		this.userConfig.setVisible(false);
+
 		// 初始游戏数据
 		this.gameService.startGame();
 		gameThread = new MainThread();
@@ -173,7 +189,7 @@ public class GameControl
 		gameThread.start();
 		this.panelGame.repaint();
 	}
-	
+
 	public class MainThread extends Thread
 	{
 		@Override
@@ -181,16 +197,12 @@ public class GameControl
 		{
 			// 刷新画面
 			panelGame.repaint();
-			while (true)
+			while (dto.isStart())
 			{
-				if (!dto.isStart())
-				{
-					break;
-				}
 				try
 				{
-					// 休眠0.5秒
-					Thread.sleep(500);
+					// 休眠?秒
+					Thread.sleep(dto.getSleepTime());
 				}
 				catch (InterruptedException e)
 				{
@@ -201,13 +213,49 @@ public class GameControl
 				{
 					continue;
 				}
-				
+
 				// 方块下落
 				gameService.moveDown();
 				// 刷新画面
 				panelGame.repaint();
 			}
+			// 如果没有作弊 当游戏结束，弹出得分记录保存窗口
+			if (!dto.isCheat())
+			{
+				afterGameOver();
+			}
 		}
+	}
+
+	/**
+	 * 保存玩家信息
+	 * 
+	 * @param name
+	 */
+	public void saveScore(String name)
+	{
+		Player player = new Player(name, this.dto.getCurPoint());
+		dataA.saveData(player);
+		dataB.saveData(player);
+		// 设置数据库记录到游戏
+		this.dto.setDatabaseRecord(dataA.loadData());
+		// 设置本地记录到游戏
+		this.dto.setLocalRecord(dataB.loadData());
+
+		this.panelGame.repaint();
+	}
+
+	/*
+	 * 游戏结束 后续操作 保存玩家信息
+	 */
+	private void afterGameOver()
+	{
+		// 弹出得分记录保存窗口
+		this.frameSaveScore.showSaveWindow(this.dto.getCurPoint());
+		this.frameSaveScore.setAlwaysOnTop(true);
+
+		// 开始和设置按钮可点击
+		this.panelGame.setButtonStatus(true);
 	}
 
 }

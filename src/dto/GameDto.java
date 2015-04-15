@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import util.GameFuction;
 import config.GameConfig;
 import entity.GameAct;
 
@@ -74,8 +75,25 @@ public class GameDto
 	 */
 	private int curRemoveRowLines;
 	
+	private int sleepTime;
+	
 	private boolean start;
 	
+	/**
+	 * 是否作弊
+	 */
+	private boolean cheat;
+	
+	public boolean isCheat()
+	{
+		return cheat;
+	}
+
+	public void setCheat(boolean cheat)
+	{
+		this.cheat = cheat;
+	}
+
 	public GameDto()
 	{
 		
@@ -83,12 +101,16 @@ public class GameDto
 	}
 	
 	/**
-	 * 初始化gameMap
+	 * 初始化gameMap 等
 	 */
-	private void init()
+	public void init()
 	{
-		
 		gameMap = new boolean[GAME_ZONE_H][GAME_ZONE_W];
+		this.curLevel = 1;
+		this.curPoint = 0;
+		this.curRemoveRowLines = 0;
+		this.isPause = false;
+		this.sleepTime = GameFuction.getSleepTimeByLevel(this.curLevel);
 	}
 
 	public List<Player> getDatabaseRecord()
@@ -169,6 +191,7 @@ public class GameDto
 	public void setCurLevel(int curLevel)
 	{
 		this.curLevel = curLevel;
+		this.sleepTime = GameFuction.getSleepTimeByLevel(this.curLevel);
 	}
 
 	public int getCurPoint()
@@ -209,6 +232,11 @@ public class GameDto
 	public void changePause()
 	{
 		this.isPause = !this.isPause;
+	}
+
+	public int getSleepTime()
+	{
+		return sleepTime;
 	}
 
 	
